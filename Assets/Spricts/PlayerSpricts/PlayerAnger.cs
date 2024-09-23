@@ -6,7 +6,7 @@ public class PlayerAnger : PlayerBase
     [SerializeField] private GameObject punchAreaObject; // インスペクターで設定
     private BoxCollider2D punchCollider;
     [SerializeField] private float punchDuration = 1f; // パンチの有効時間（秒）
-    [SerializeField] private float punchSpeed = 15f; // パンチ時の前進速度
+    [SerializeField] private float punchSpeed = 50f; // パンチ時の前進速度
 
     private bool isPunching = false; // パンチ中かどうかのフラグ
 
@@ -24,7 +24,10 @@ public class PlayerAnger : PlayerBase
 
     protected override void Update()
     {
-        base.Update();
+        if (!isPunching)
+        {
+            base.Update();
+        }
 
         // パンチ中は他の入力を無効化する
         if (isPunching)
@@ -47,12 +50,15 @@ public class PlayerAnger : PlayerBase
     }
     protected override void Jump()
     {
-        base.Jump();
-
-        // 覚醒時のジャンプ力を増加させる
-        if (isJumping)
+        if (!isPunching)
         {
-            playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.x, jumpSpeed * 3); // 覚醒時は1.5倍のジャンプ力
+            base.Jump();
+
+            // 覚醒時のジャンプ力を増加させる
+            if (isJumping)
+            {
+                playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.x, jumpSpeed * 3); // 覚醒時は1.5倍のジャンプ力
+            }
         }
     }
 
@@ -76,6 +82,7 @@ public class PlayerAnger : PlayerBase
 
     private IEnumerator PunchRoutine()
     {
+        Debug.Log("Punch started");
         isPunching = true;
 
         // Animatorのパラメータ'punch'をtrueにする
@@ -83,11 +90,13 @@ public class PlayerAnger : PlayerBase
 
         // パンチのコライダーを有効にする
         punchCollider.enabled = true;
-
+            
         // 加速する
         Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f, 0f);
         playerRigidbody2D.AddForce(punchDirection * punchSpeed, ForceMode2D.Force);
-        
+
+        Debug.Log("Force applied for punch");
+
         yield return new WaitForSeconds(punchDuration);
 
         // Animator,ﾊﾟﾝﾁのｺﾗｲﾀﾞｰ、をオフにする
@@ -95,5 +104,6 @@ public class PlayerAnger : PlayerBase
         punchCollider.enabled = false;
 
         isPunching = false;
+        Debug.Log("Punch ended");
     }
 }
