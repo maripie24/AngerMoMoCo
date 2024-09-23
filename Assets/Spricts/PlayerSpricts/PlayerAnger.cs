@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerAnger : PlayerBase
 {
     [SerializeField] private GameObject punchAreaObject; // インスペクターで設定
     private BoxCollider2D punchCollider;
-    [SerializeField] private float punchDuration = 0.5f; // パンチの有効時間（秒）
+    [SerializeField] private float punchDuration = 1f; // パンチの有効時間（秒）
     [SerializeField] private float punchSpeed = 10f; // パンチ時の前進速度
 
     private bool isPunching = false; // パンチ中かどうかのフラグ
@@ -18,6 +19,7 @@ public class PlayerAnger : PlayerBase
 
         punchCollider = punchAreaObject.GetComponent<BoxCollider2D>(); // PunchAreaのBoxCollider2Dを取得
         punchCollider.enabled = false; // 初期状態では無効化
+
     }
 
     protected override void Update()
@@ -56,28 +58,42 @@ public class PlayerAnger : PlayerBase
 
     protected override void Shoothing()
     {
-        // 左クリック（マウスボタン0）が押されている間
-        if (Input.GetMouseButton(0))
-        {
-            // Animatorに'punch'パラメータをtrueに設定
-            animator.SetBool("punch", true);
+        // shootingは使わない？？（空中のときのみ使えるようしたい）
+        HandlePunchInput();
+    }
 
-            // PunchColliderを有効化
-            if (punchCollider != null)
-            {
-                punchCollider.enabled = true;
-            }
-        }
-        else
+    /// <summary>
+    /// パンチの入力を処理
+    /// </summary>
+    private void HandlePunchInput()
+    {
+        // 左クリック
+        if(Input.GetMouseButtonDown(0) && !isPunching)
         {
-            // 左クリックが離されたら'punch'をfalseに設定
-            animator.SetBool("punch", false);
-
-            // PunchColliderを無効化
-            if (punchCollider != null)
-            {
-                punchCollider.enabled = false;
-            }
+            StartCoroutine("PunchRoutine");
         }
+    }
+
+    private IEnumerator PunchRoutine()
+    {
+        isPunching = true;
+
+        // Animatorのパラメータ'punch'をtrueにする
+        animator.SetBool("punch", true);
+
+        // パンチのコライダーを有効にする
+        punchCollider.enabled = true;
+
+        // 加速する
+        Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f * punchSpeed, 0f);
+        playerRigidbody2D.AddForce(punchDirection, ForceMode2D.Impulse);
+        
+        yield return new WaitForSeconds(punchDuration);
+
+        // Animator,ﾊﾟﾝﾁのｺﾗｲﾀﾞｰ、をオフにする
+        animator.SetBool("punch", false); 
+        punchCollider.enabled = false;
+
+        isPunching = false;
     }
 }
