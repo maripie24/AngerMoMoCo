@@ -56,12 +56,28 @@ public class PlayerAnger : PlayerBase
 
     protected override void Shoothing()
     {
-        // 左クリックでパンチ
-        if (Input.GetMouseButtonDown(0))
+        // 左クリック（マウスボタン0）が押されている間
+        if (Input.GetMouseButton(0))
         {
-            // PunchAreaを有効にする
-            punchCollider.enabled = true;
-        }
+            // Animatorに'punch'パラメータをtrueに設定
+            animator.SetBool("punch", true);
 
+            // PunchColliderを有効化
+            if (punchCollider != null)
+            {
+                punchCollider.enabled = true;
+            }
+        }
+        else
+        {
+            // 左クリックが離されたら'punch'をfalseに設定
+            animator.SetBool("punch", false);
+
+            // PunchColliderを無効化
+            if (punchCollider != null)
+            {
+                punchCollider.enabled = false;
+            }
+        }
     }
 }
