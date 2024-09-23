@@ -61,7 +61,7 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    // ノックバックとダメージの実装
+    // 弾丸のノックバックとダメージ
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -75,11 +75,25 @@ public class EnemyManager : MonoBehaviour
         
     }
 
+    // パンチとの衝突
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PunchArea"))
+        {
+            // Debug.Log("敵を検出しました");
+            // パンチエリアからのノックバック方向
+            Vector2 knockbackDirection = (this.transform.position - collision.transform.position);
+            GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * 2, ForceMode2D.Impulse);
+
+            TakeDamage();
+        }
+    }
+
     // ダメージの実装
     private void TakeDamage()
     {
         HP -= 20;
-        sliderHP.value = (float)HP;
+        sliderHP.value = (float)HP; // slider側のスプリクトのメソッドで減らす
         if (HP <= 0)
         {
             angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // Angerゲージが貯まる(敵を倒すと)

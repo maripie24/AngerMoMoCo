@@ -6,7 +6,7 @@ public class PlayerAnger : PlayerBase
     [SerializeField] private GameObject punchAreaObject; // インスペクターで設定
     private BoxCollider2D punchCollider;
     [SerializeField] private float punchDuration = 1f; // パンチの有効時間（秒）
-    [SerializeField] private float punchSpeed = 10f; // パンチ時の前進速度
+    [SerializeField] private float punchSpeed = 15f; // パンチ時の前進速度
 
     private bool isPunching = false; // パンチ中かどうかのフラグ
 
@@ -85,8 +85,8 @@ public class PlayerAnger : PlayerBase
         punchCollider.enabled = true;
 
         // 加速する
-        Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f * punchSpeed, 0f);
-        playerRigidbody2D.AddForce(punchDirection, ForceMode2D.Impulse);
+        Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f, 0f);
+        playerRigidbody2D.AddForce(punchDirection * punchSpeed, ForceMode2D.Force);
         
         yield return new WaitForSeconds(punchDuration);
 

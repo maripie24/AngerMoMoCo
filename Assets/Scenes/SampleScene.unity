@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 151190533}
   m_Layer: 0
   m_Name: PunchArea
-  m_TagString: Bullet
+  m_TagString: PunchArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,8 +454,8 @@ Transform:
   m_GameObject: {fileID: 151190531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0}
-  m_LocalScale: {x: 4.34, y: 8.01, z: 1}
+  m_LocalPosition: {x: 0.7787, y: 0, z: 0}
+  m_LocalScale: {x: 3.0974581, y: 8.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 186505162}
@@ -489,7 +489,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1892,7 +1892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 886490172958359368, guid: 0fd24a6af915fbe4a87304cbbfe17547, type: 3}
-  spawnInterval: 1
+  spawnInterval: 5
 --- !u!1 &1898838743
 GameObject:
   m_ObjectHideFlags: 3
