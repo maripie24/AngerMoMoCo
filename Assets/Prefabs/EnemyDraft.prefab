@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 101159146673375648}
   - component: {fileID: 6666956103220513127}
-  - component: {fileID: 5776072705540760419}
   - component: {fileID: 275967708797961336}
   - component: {fileID: 3953186843089740336}
   - component: {fileID: 689399353698892289}
+  - component: {fileID: 1794682979223167444}
   m_Layer: 0
   m_Name: EnemyDraft
   m_TagString: Enemy
@@ -90,27 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &5776072705540760419
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886490172958359368}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f5d5c652d7c0bb24198dce8bfb22fccc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!70 &275967708797961336
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -190,6 +169,27 @@ MonoBehaviour:
   maxHP: 40
   sliderHP: {fileID: 8267596771457294976}
   isChasing: 0
+--- !u!95 &1794682979223167444
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886490172958359368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f5d5c652d7c0bb24198dce8bfb22fccc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1425071718070215239
 GameObject:
   m_ObjectHideFlags: 0

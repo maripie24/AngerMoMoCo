@@ -83,7 +83,7 @@ public class EnemyManager : MonoBehaviour
             // Debug.Log("敵を検出しました");
             // パンチエリアからのノックバック方向
             Vector2 knockbackDirection = (this.transform.position - collision.transform.position);
-            GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * 2, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * 10, ForceMode2D.Impulse);
 
             TakeDamage();
         }
