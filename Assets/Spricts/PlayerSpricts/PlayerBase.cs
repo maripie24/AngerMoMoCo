@@ -24,7 +24,9 @@ public class PlayerBase : MonoBehaviour
     protected bool isGround = false;
     protected bool isHead = false;
     protected bool isJumping = false;
+    protected bool canControl = true;
     public bool isFacingRight = true; // プレイヤーが右を向いているか
+
 
     protected virtual void Start()
     {
@@ -42,8 +44,17 @@ public class PlayerBase : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        Movement();
-        Jump();
+        if (canControl)
+        {
+            Movement();
+            Jump();
+        }
+    }
+
+    // 入力を受け付けるかどうか
+    protected virtual void SwitchCanControl()
+    {
+        canControl = !canControl;
     }
 
     /// <summary>
