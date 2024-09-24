@@ -8,4 +8,14 @@ public class StartManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    // Exitƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚é‚ÆÀs‚³‚ê‚é
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
 }
