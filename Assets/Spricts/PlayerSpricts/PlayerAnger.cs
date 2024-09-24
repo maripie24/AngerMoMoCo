@@ -5,8 +5,8 @@ public class PlayerAnger : PlayerBase
 {
     [SerializeField] private GameObject punchAreaObject; // インスペクターで設定
     private BoxCollider2D punchCollider;
-    [SerializeField] private float punchDuration = 1f; // パンチの有効時間（秒）
-    [SerializeField] private float punchSpeed = 50f; // パンチ時の前進速度
+    [SerializeField] private float punchDuration = 0.5f; // パンチの有効時間（秒）
+    [SerializeField] private float punchSpeed = 30f; // パンチ時の前進速度
 
     private bool isPunching = false; // パンチ中かどうかのフラグ
 

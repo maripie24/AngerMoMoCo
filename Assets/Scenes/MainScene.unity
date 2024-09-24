@@ -816,7 +816,7 @@ MonoBehaviour:
   speed: 5
   gravity: 4
   jumpSpeed: 10
-  jumpHeight: 1.8
+  jumpHeight: 2
   isFacingRight: 1
 --- !u!114 &186505164
 MonoBehaviour:
