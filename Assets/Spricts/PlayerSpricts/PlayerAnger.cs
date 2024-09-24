@@ -91,9 +91,9 @@ public class PlayerAnger : PlayerBase
         // パンチのコライダーを有効にする
         punchCollider.enabled = true;
             
-        // 加速する
+        // 一定速度に固定する
         Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f, 0f);
-        playerRigidbody2D.AddForce(punchDirection * punchSpeed, ForceMode2D.Force);
+        playerRigidbody2D.velocity = punchDirection * punchSpeed;
 
         Debug.Log("Force applied for punch");
 

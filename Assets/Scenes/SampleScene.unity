@@ -903,8 +903,8 @@ MonoBehaviour:
   jumpHeight: 7
   isFacingRight: 1
   punchAreaObject: {fileID: 151190531}
-  punchDuration: 1
-  punchSpeed: 10
+  punchDuration: 0.5
+  punchSpeed: 30
 --- !u!114 &186505165
 MonoBehaviour:
   m_ObjectHideFlags: 0
