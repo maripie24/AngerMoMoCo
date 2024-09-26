@@ -662,7 +662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7077e546788e6458c2f479a4b7d501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: {fileID: 820334923042458759, guid: ede504fc4c6da49488c388b295482e47, type: 3}
+  playerBullets:
+  - {fileID: 820334923042458759, guid: ede504fc4c6da49488c388b295482e47, type: 3}
+  - {fileID: 1549541919078624607, guid: 493fa30c5a3807447a2314366c009e11, type: 3}
+  - {fileID: 4177928386125212488, guid: 89d492acff264d245a84dd33b372cfcd, type: 3}
+  - {fileID: 4472436361337549775, guid: 1ef877df2e3585b4bb9978673da73eac, type: 3}
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -746,7 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29892708b0b654c44a784d1e0ff18eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: {fileID: 820334923042458759, guid: ede504fc4c6da49488c388b295482e47, type: 3}
+  playerBullets: []
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -846,7 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73dcfa62389bea4d854b14b59910b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: {fileID: 0}
+  playerBullets: []
   dashCurve:
     serializedVersion: 2
     m_Curve: []

@@ -24,13 +24,14 @@ public class PlayerBullet : MonoBehaviour
         else { isFacingRight = false; }
 
         BulletDirection(isFacingRight);
+        AddRotatetion(isFacingRight);
 
         Destroy(this.gameObject, lifeTime);
     }
 
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,7 +46,15 @@ public class PlayerBullet : MonoBehaviour
     private void BulletDirection(bool isFacingRight)
     {
         float playerDirection = isFacingRight ? 1f : -1f; // プレイヤーの向きとたまの発射向きを合わせる
-        Vector2 shootDirection = new Vector2(playerDirection, 0.1f).normalized; // たまの初速向き
-        bulletRigidbody2D.velocity = shootDirection * bulletSpeed; // たまの初速速度をかける
+        Vector2 shootDirection = new Vector2(playerDirection, 0.1f).normalized; // 弾の初速向き
+        bulletRigidbody2D.velocity = shootDirection * bulletSpeed; // 弾の初速速度をかける
+    }
+
+    private void AddRotatetion(bool isFacingRight)
+    {
+        // プレイヤーの方向に応じて回転の向きを変更する
+        float rotateDirection = isFacingRight ? 1f : -1f;
+        Vector2 torque = new Vector2(0, rotateDirection).normalized;
+        bulletRigidbody2D.AddTorque(torque.y * 2, ForceMode2D.Impulse);
     }
 }

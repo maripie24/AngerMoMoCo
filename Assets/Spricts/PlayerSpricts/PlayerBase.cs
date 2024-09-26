@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    [SerializeField] protected GameObject playerBullet; // インスペクター上で設定する
+    [SerializeField] protected GameObject[] playerBullets; // インスペクター上で設定する
     [SerializeField] protected AnimationCurve dashCurve; // インスペクター上で設定する
     [SerializeField] protected AnimationCurve jumpCurve; // インスペクター上で設定する
     protected Rigidbody2D playerRigidbody2D;
     protected Animator animator;
     protected GroundCheck groundCheck;
-    protected GroundCheck headCheck;    
+    protected GroundCheck headCheck;
 
     [SerializeField] protected float speed = 5f;
     [SerializeField] protected float gravity = 4f;
@@ -65,15 +65,26 @@ public class PlayerBase : MonoBehaviour
         // 左クリックで弾を発射
         if (Input.GetMouseButtonDown(0))
         {
-            animator.SetTrigger("throw");
-
-            // プレイヤーの向きに応じて発射点を左右に変える
-            Vector3 spawnOffset = new Vector3(isFacingRight ? 1.5f : -1.5f, 1f, 0f);
-            Vector3 spawnPosition = this.transform.position + spawnOffset;
-
-            // spawnPositionから弾を生成する
-            Instantiate(playerBullet, spawnPosition, Quaternion.identity);
+            Fire();
         }
+    }
+
+    // 弾の設定
+    protected virtual void Fire()
+    {
+        animator.SetTrigger("throw");
+
+        int index = Random.Range(0, playerBullets.Length);
+        Debug.Log($"選択されたインデックス: {index}");
+
+        GameObject bulletToSpawn = playerBullets[index];
+
+        // プレイヤーの向きに応じて発射点を左右に変える
+        Vector3 spawnOffset = new Vector3(isFacingRight ? 1.5f : -1.5f, 1f, 0f);
+        Vector3 spawnPosition = this.transform.position + spawnOffset;
+
+        // spawnPositionから弾を生成する
+        Instantiate(bulletToSpawn, spawnPosition, Quaternion.identity);
     }
 
     /// <summary>
