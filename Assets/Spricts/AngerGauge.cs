@@ -6,12 +6,11 @@ using System;
 public class AngerGauge : MonoBehaviour
 {
     [SerializeField] private Image angerImage;
+    [SerializeField] private Image maxAngerImage;
 
     private AngerSwitcher angerSwitcher;
 
     public float duration = 0.5f;
-    public float strength = 20f;
-    public int vibrate = 100;
 
     public float debugAngerRate = 0.2f;
     public float currentRate = 0f;
@@ -19,13 +18,14 @@ public class AngerGauge : MonoBehaviour
 
     public bool isFull = false; // ゲージが満タンになったらtrue
     public bool isZero = false; // ゲージがゼロになったらtrue
-    private bool isPulsing = false; // パルス効果のフラグ
     private Tween pulseTween; // Tweenの参照
 
     private void Start()
     {
         angerSwitcher = GameObject.Find("Player").GetComponent<AngerSwitcher>();    
-        SetGauge(1f); // ゲージのゼロにセットする
+        SetGauge(0.8f); // ゲージのゼロにセットする
+
+        maxAngerImage.gameObject.SetActive(false);// 初期状態でmaxAngerImageを非アクティブにする
     }
 
     private void Update()
@@ -38,29 +38,34 @@ public class AngerGauge : MonoBehaviour
             isZero = false;
 
             SetGauge(1f); // AngerRateを1以上にしないように固定する
+            StartPulse();
+
+            // 満タン時にangerImageを非アクティブ、maxAngerImageをアクティブにする
+            angerImage.gameObject.SetActive(false);
+            maxAngerImage.gameObject.SetActive(true);
 
             // ノーマル、アンガー状態のトリガーを外す
             angerSwitcher.EnableAngerSwitch();
             angerSwitcher.EnableNormalSwitch();
-
-            StartPulsing(); // パルス効果を開始
-
-            // 既存のShake処理を維持
-            transform.DOShakePosition(duration * 0.5f, strength, vibrate);
         }
         else if (currentRate > 0f)
         {
             isFull = false;
             isZero = false;
-            StopPulsing(); // パルス効果を停止
+            StopPulse();
         }
         else // ゲージゼロ
         {
             isFull = false;
             isZero = true;
-            StopPulsing(); // パルス効果を停止
+            StopPulse();
 
             SetGauge(0f); // ゲージをゼロで固定
+
+            // ゲージがゼロでangerImageをアクティブ、maxAngerImageを非アクティブにする
+            angerImage.gameObject.SetActive(true);
+            maxAngerImage.gameObject.SetActive(false);
+
             // ゲージがゼロになったらNormal状態に切り替える
             angerSwitcher.SwitchToNormal();
         }
@@ -72,36 +77,29 @@ public class AngerGauge : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// パルス効果を開始するメソッド
-    /// </summary>
-    private void StartPulsing()
+    private void StartPulse()
     {
-        isPulsing = true;
-        // **追加: パルス効果のTweenを設定**
-        pulseTween = transform.DOScale(1.1f, 0.5f) // 拡大
-            .SetLoops(-1, LoopType.Yoyo) // 繰り返し
+        if (pulseTween != null && pulseTween.IsActive()) return;
+
+        // スケールを1.2倍に拡大し、元に戻すループアニメーション
+        pulseTween = maxAngerImage.transform.DOScale(1.2f, 0.5f)
+            .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }
 
-    /// <summary>
-    /// パルス効果を停止するメソッド
-    /// </summary>
-    private void StopPulsing()
+    private void StopPulse()
     {
-        isPulsing = false;
         if (pulseTween != null && pulseTween.IsActive())
         {
-            pulseTween.Kill(); // Tweenを停止
+            pulseTween.Kill();
+            maxAngerImage.transform.localScale = Vector3.one; // スケールを元に戻す
         }
-
-        // **追加: ゲージのスケールを元に戻す**
-        transform.localScale = new Vector3 (0.6f,0.6f,0.6f);
     }
 
     public void SetGauge(float targetRate)
     {
         angerImage.DOFillAmount(targetRate, duration * 0.5f);
+        maxAngerImage.DOFillAmount(targetRate, duration * 0.5f);
 
         currentRate = targetRate;
     }
@@ -116,7 +114,7 @@ public class AngerGauge : MonoBehaviour
     public void DecreaseAnger()
     {
         // ゲージ数値を減らす
-        currentRate -= 0.001f;
+        currentRate -= 0.0006f;
         SetGauge(currentRate);
     }
 }
