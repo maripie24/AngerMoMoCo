@@ -6,6 +6,8 @@ public class AngerSwitcher : MonoBehaviour
     private PlayerAnger playerAnger;
     private AngerGauge angerGauge;
     public bool canSwitchToAnger = false;
+    private bool transitionToNomal = false;
+
     void Start()
     {
         playerNormal = GetComponent<PlayerNormal>();
@@ -15,13 +17,9 @@ public class AngerSwitcher : MonoBehaviour
         GameObject angerGaugeObject = GameObject.Find("AngerCanvas/AngerGauge");
         angerGauge = angerGaugeObject.GetComponent<AngerGauge>();
 
-
         // 初期状態を設定
-        if (playerNormal != null && playerAnger != null)
-        {
-            playerNormal.enabled = true;
-            playerAnger.enabled = false;
-        }
+        playerNormal.enabled = true;
+        playerAnger.enabled = false;
     }
 
     void Update()
@@ -29,21 +27,36 @@ public class AngerSwitcher : MonoBehaviour
         // デバッグ
         if (canSwitchToAnger && Input.GetKeyDown(KeyCode.E))
         {
-            // コンポーネントの有効/無効の切り替え
-            if(playerNormal != null && playerAnger != null)
-            {
-                // 状態の切り替え
-                playerNormal.enabled = !playerNormal.enabled;
-                playerAnger.enabled = !playerAnger.enabled;
-
-                canSwitchToAnger = false;
-                //Debug.Log("falseになりました。");
-            }
+            SwitchToAnger();
         }
+
+        if (transitionToNomal)
+        {
+            SwitchToNormal();
+        }
+    }
+
+    public void SwitchToAnger()
+    {
+        // 状態の切り替え
+        playerNormal.enabled = false;
+        playerAnger.enabled = true;
+    }
+
+    public void SwitchToNormal()
+    {
+        // 状態の切り替え
+        playerNormal.enabled = true;
+        playerAnger.enabled = false;
+    }
+
+    public void EnableNormalSwitch()
+    {
+        transitionToNomal = angerGauge.isZero;
     }
 
     public void EnableAngerSwitch()
     {
-        canSwitchToAnger = true;
+        canSwitchToAnger = angerGauge.isFull;
     }
 }

@@ -6,7 +6,6 @@ using System;
 public class AngerGauge : MonoBehaviour
 {
     [SerializeField] private Image angerImage;
-    [SerializeField] private Image burnImage;
 
     private AngerSwitcher angerSwitcher;
 
@@ -18,6 +17,8 @@ public class AngerGauge : MonoBehaviour
     public float currentRate = 0f;
     public float angerTime = 20f; // アンガー状態の期間
 
+    public bool isFull = false; // ゲージが満タンになったらtrue
+    public bool isZero = false; // ゲージがゼロになったらtrue
     private bool isPulsing = false; // パルス効果のフラグ
     private Tween pulseTween; // Tweenの参照
 
@@ -30,27 +31,38 @@ public class AngerGauge : MonoBehaviour
     private void Update()
     {
         Debug.Log($"{currentRate}です"); // ゲージの数値チェック
-        if (currentRate >= 1f)
-        {
-            // アンガー状態のトリガーを外す
-            angerSwitcher.EnableAngerSwitch();
 
-            if (!isPulsing)
-            {
-                StartPulsing(); // パルス効果を開始
-            }
+        if (currentRate >= 1f) // ゲージ満タン
+        {
+            isFull = true;
+            isZero = false;
+
+            SetGauge(1f); // AngerRateを1以上にしないように固定する
+
+            // ノーマル、アンガー状態のトリガーを外す
+            angerSwitcher.EnableAngerSwitch();
+            angerSwitcher.EnableNormalSwitch();
+
+            StartPulsing(); // パルス効果を開始
 
             // 既存のShake処理を維持
             transform.DOShakePosition(duration * 0.5f, strength, vibrate);
-
-
         }
-        else
+        else if (currentRate > 0f)
         {
-            if (isPulsing)
-            {
-                StopPulsing(); // パルス効果を停止
-            }
+            isFull = false;
+            isZero = false;
+            StopPulsing(); // パルス効果を停止
+        }
+        else // ゲージゼロ
+        {
+            isFull = false;
+            isZero = true;
+            StopPulsing(); // パルス効果を停止
+
+            SetGauge(0f); // ゲージをゼロで固定
+            // ゲージがゼロになったらNormal状態に切り替える
+            angerSwitcher.SwitchToNormal();
         }
 
         // デバッグ
@@ -89,10 +101,7 @@ public class AngerGauge : MonoBehaviour
 
     public void SetGauge(float targetRate)
     {
-        burnImage.DOFillAmount(targetRate, duration).OnComplete(() =>
-        {
-            angerImage.DOFillAmount(targetRate, duration * 0.5f).SetDelay(0.1f);
-        });
+        angerImage.DOFillAmount(targetRate, duration * 0.5f);
 
         currentRate = targetRate;
     }
@@ -106,10 +115,8 @@ public class AngerGauge : MonoBehaviour
     // ゲージを減らす
     public void DecreaseAnger()
     {
-        burnImage.DOFillAmount(0f, angerTime);
-        angerImage.DOFillAmount(0f, angerTime).SetDelay(0.1f);
-
-        // アンガーゲージの初期化
-        currentRate = 0f;
+        // ゲージ数値を減らす
+        currentRate -= 0.001f;
+        SetGauge(currentRate);
     }
 }
