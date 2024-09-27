@@ -37,6 +37,7 @@ public class AngerSwitcher : MonoBehaviour
                 playerAnger.enabled = !playerAnger.enabled;
 
                 canSwitchToAnger = false;
+                //Debug.Log("falseÇ…Ç»ÇËÇ‹ÇµÇΩÅB");
             }
         }
     }

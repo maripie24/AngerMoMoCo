@@ -29,6 +29,7 @@ public class AngerGauge : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log($"{currentRate}です"); // ゲージの数値チェック
         if (currentRate >= 1f)
         {
             // アンガー状態のトリガーを外す
@@ -60,25 +61,6 @@ public class AngerGauge : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲージの色を設定するためのメソッド
-    /// </summary>
-    private void SetGaugeColor(bool isFull)
-    {
-        if (isFull)
-        {
-            // **追加: 満タン時の色に変更**
-            angerImage.color = Color.red; // 例: 赤色に変更
-            burnImage.color = Color.red;
-        }
-        else
-        {
-            // **追加: 通常時の色に戻す**
-            angerImage.color = Color.blue; // 例: 青色に変更
-            burnImage.color = Color.blue;
-        }
-    }
-
-    /// <summary>
     /// パルス効果を開始するメソッド
     /// </summary>
     private void StartPulsing()
@@ -88,9 +70,6 @@ public class AngerGauge : MonoBehaviour
         pulseTween = transform.DOScale(1.1f, 0.5f) // 拡大
             .SetLoops(-1, LoopType.Yoyo) // 繰り返し
             .SetEase(Ease.InOutSine);
-
-        // **追加: ゲージの色を変更**
-        SetGaugeColor(true);
     }
 
     /// <summary>
@@ -103,11 +82,9 @@ public class AngerGauge : MonoBehaviour
         {
             pulseTween.Kill(); // Tweenを停止
         }
-        // **追加: ゲージの色を通常時に戻す**
-        SetGaugeColor(false);
 
         // **追加: ゲージのスケールを元に戻す**
-        transform.localScale = Vector3.one;
+        transform.localScale = new Vector3 (0.6f,0.6f,0.6f);
     }
 
     public void SetGauge(float targetRate)
@@ -127,7 +104,7 @@ public class AngerGauge : MonoBehaviour
     }
 
     // ゲージを減らす
-    public void DecreaseAnger(float rate)
+    public void DecreaseAnger()
     {
         burnImage.DOFillAmount(0f, angerTime);
         angerImage.DOFillAmount(0f, angerTime).SetDelay(0.1f);
