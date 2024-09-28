@@ -14,7 +14,7 @@ public class AngerSwitcher : MonoBehaviour
         playerAnger = GetComponent<PlayerAnger>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
-        GameObject angerGaugeObject = GameObject.Find("AngerCanvas/AngerGauge");
+        GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
         angerGauge = angerGaugeObject.GetComponent<AngerGauge>();
 
         // 初期状態を設定

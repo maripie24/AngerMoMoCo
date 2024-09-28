@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
         anim = this.GetComponent<Animator>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
-        GameObject angerGaugeObject = GameObject.Find("AngerCanvas/AngerGauge");
+        GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
         angerGaugeScript = angerGaugeObject.GetComponent<AngerGauge>();
 
         sliderHP.value = maxHP; // Sliderを最大HPに設定する
