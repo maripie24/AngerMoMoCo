@@ -44,15 +44,18 @@ public class AngerGauge : MonoBehaviour
             angerImage.gameObject.SetActive(false);
             maxAngerImage.gameObject.SetActive(true);
 
-            // ノーマル、アンガー状態のトリガーを外す
-            angerSwitcher.EnableAngerSwitch();
-            angerSwitcher.EnableNormalSwitch();
+            // アンガーモードへの切り替えを可能にする
+            angerSwitcher.canSwitchToAnger = true;
         }
-        else if (currentRate > 0f)
+        else if (currentRate > 0f && currentRate < 1f) // ゼロから1の間
         {
             isFull = false;
             isZero = false;
             StopPulse();
+
+            // Angerモードへの切り替えをできなくする
+            angerSwitcher.canSwitchToAnger = false;
+
         }
         else // ゲージゼロ
         {
@@ -66,11 +69,14 @@ public class AngerGauge : MonoBehaviour
             angerImage.gameObject.SetActive(true);
             maxAngerImage.gameObject.SetActive(false);
 
-            // ゲージがゼロになったらNormal状態に切り替える
+            // Angerモードへの切り替えをできなくする
+            angerSwitcher.canSwitchToAnger = false;
+
+            // 自動的にNormal状態に切り替える
             angerSwitcher.SwitchToNormal();
         }
 
-        // デバッグ
+        // デバッグ　完成後は消す
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             AddAnger(debugAngerRate);

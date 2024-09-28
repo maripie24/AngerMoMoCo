@@ -6,7 +6,7 @@ public class AngerSwitcher : MonoBehaviour
     private PlayerAnger playerAnger;
     private AngerGauge angerGauge;
     public bool canSwitchToAnger = false;
-    private bool transitionToNomal = false;
+    public bool isAngerMode = false;
 
     void Start()
     {
@@ -20,6 +20,7 @@ public class AngerSwitcher : MonoBehaviour
         // ‰Šúó‘Ô‚ğİ’è
         playerNormal.enabled = true;
         playerAnger.enabled = false;
+        isAngerMode = false;
     }
 
     void Update()
@@ -29,11 +30,6 @@ public class AngerSwitcher : MonoBehaviour
         {
             SwitchToAnger();
         }
-
-        if (transitionToNomal)
-        {
-            SwitchToNormal();
-        }
     }
 
     public void SwitchToAnger()
@@ -41,6 +37,7 @@ public class AngerSwitcher : MonoBehaviour
         // ó‘Ô‚ÌØ‚è‘Ö‚¦
         playerNormal.enabled = false;
         playerAnger.enabled = true;
+        isAngerMode = true;
     }
 
     public void SwitchToNormal()
@@ -48,15 +45,7 @@ public class AngerSwitcher : MonoBehaviour
         // ó‘Ô‚ÌØ‚è‘Ö‚¦
         playerNormal.enabled = true;
         playerAnger.enabled = false;
+        isAngerMode = false;
     }
 
-    public void EnableNormalSwitch()
-    {
-        transitionToNomal = angerGauge.isZero;
-    }
-
-    public void EnableAngerSwitch()
-    {
-        canSwitchToAnger = angerGauge.isFull;
-    }
 }
