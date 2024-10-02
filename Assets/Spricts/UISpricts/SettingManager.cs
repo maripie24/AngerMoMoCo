@@ -5,9 +5,8 @@ using UnityEngine.Audio;
 public class SettingManager : MonoBehaviour
 {
     [Header("UI要素")]
-    public GameObject settingPanel;
-    public Slider volumeSlider;
-
+    [SerializeField] private GameObject settingPanel; // インスペクター上で設定
+    [SerializeField] private Slider volumeSlider;     // インスペクター上で設定
     // [Header("Audio")]
     // public AudioMixer auidioMixier;
 

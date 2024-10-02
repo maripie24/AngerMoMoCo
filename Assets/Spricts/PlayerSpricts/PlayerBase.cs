@@ -62,8 +62,8 @@ public class PlayerBase : MonoBehaviour
     /// </summary>
     protected virtual void Shoothing()
     {
-        // 左クリックで弾を発射
-        if (Input.GetMouseButtonDown(0))
+        // 左クリックで弾を発射(ポーズ中じゃないとき)
+        if (Input.GetMouseButtonDown(0) && !GameManager.IsPaused)
         {
             Fire();
         }

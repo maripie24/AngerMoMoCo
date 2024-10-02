@@ -75,12 +75,6 @@ public class AngerGauge : MonoBehaviour
             // 自動的にNormal状態に切り替える
             angerSwitcher.SwitchToNormal();
         }
-
-        // デバッグ　完成後は消す
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            AddAnger(debugAngerRate);
-        }
     }
 
     private void StartPulse()
