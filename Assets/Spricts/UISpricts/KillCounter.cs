@@ -5,9 +5,18 @@ using UnityEngine;
 public class KillCounter : MonoBehaviour
 {
     public static KillCounter killCounter;
+    private TextMeshProUGUI counterText;
 
     private int enemyCount = 0;
-    private TextMeshProUGUI counterText;
+    public int EnemyCount // 読み取り専用にするプロパティ
+    {
+        get { return enemyCount; }
+        private set
+        {
+            enemyCount = value;
+            UpdateCounterUI(); // 値が変わったら表示を更新
+        }
+    }
 
     private void Awake()
     {
@@ -30,8 +39,7 @@ public class KillCounter : MonoBehaviour
 
     public void IncrementCount()
     {
-        enemyCount++;
-        UpdateCounterUI();
+        EnemyCount++;
 
     }
 

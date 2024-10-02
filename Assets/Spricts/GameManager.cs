@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel; // インスペクター上で設定
+    [SerializeField] private GameObject gameClearImage; // インスペクター上で設定
+
     private bool isPaused = false; // ゲームがポーズ中かどうかを管理するフラグ
     public static bool IsPaused { get; private set;} // 他のスプリクトから参照するためのプロパティ
 
     void Awake()
     {
         menuPanel.SetActive(false);
+        gameClearImage.SetActive(false);
 
         Time.timeScale = 1f; // jゲーム内時間の初期化
         IsPaused = false;
@@ -24,6 +28,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleMenu();
+        }
+
+        // 50キルでゲームクリア
+        if(KillCounter.killCounter.EnemyCount >= 4)
+        {
+            StartCoroutine(StartGameClearSequence());
         }
     }
 
@@ -46,6 +56,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         // シーンのロードをする
         SceneManager.LoadScene("StartScene");
+    }
+
+    // ゲームクリア時の処理
+    private IEnumerator StartGameClearSequence()
+    {
+        gameClearImage.SetActive(true);
+        Time.timeScale = 0.2f;
+
+        // リアルタイムで3秒待つ（スロー再生なので実際は10倍遅く感じる）
+        yield return new WaitForSecondsRealtime(3f);
+
+        ReturnToStartMenu();
     }
 }
 
