@@ -97,7 +97,7 @@ public class EnemyManager : MonoBehaviour
         if (HP <= 0)
         {
             angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // AngerƒQ[ƒW‚ª’™‚Ü‚é(“G‚ð“|‚·‚Æ)
-            KillCounter.killCounter.IncrementCount(); // 
+            KillCounter.killCounter.IncrementCount(); // killCounter‚Ì”Žš‚ð‘‚â‚·
             Destroy(this.gameObject);
         }
     }

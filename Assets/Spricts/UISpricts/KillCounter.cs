@@ -43,7 +43,7 @@ public class KillCounter : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Counter Text is not assigned in the Inspector.");
+            Debug.LogWarning("textがアタッチされてないかも");
         }
     }
 }
