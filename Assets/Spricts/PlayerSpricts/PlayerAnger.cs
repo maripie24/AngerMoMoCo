@@ -27,6 +27,8 @@ public class PlayerAnger : PlayerBase
 
     protected override void Update()
     {
+        if (GameManager.IsPaused){ return;} // ポーズ中は以下の処理をスキップ
+
         if (!isPunching)
         {
             base.Update();
@@ -79,8 +81,8 @@ public class PlayerAnger : PlayerBase
     /// </summary>
     private void HandlePunchInput()
     {
-        // 左クリック
-        if(Input.GetMouseButtonDown(0) && !isPunching)
+        // 左クリック(パンチ中でなくポーズ中でもないとき）
+        if(Input.GetMouseButtonDown(0) && !isPunching && !GameManager.IsPaused)
         {
             StartCoroutine("PunchRoutine");
         }
