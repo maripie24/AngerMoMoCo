@@ -75,7 +75,7 @@ public class PlayerBase : MonoBehaviour
         animator.SetTrigger("throw");
 
         int index = Random.Range(0, playerBullets.Length);
-        Debug.Log($"選択されたインデックス: {index}");
+        //  Debug.Log($"選択されたインデックス: {index}");
 
         GameObject bulletToSpawn = playerBullets[index];
 
@@ -166,6 +166,9 @@ public class PlayerBase : MonoBehaviour
 
         if (isJumping)
         {
+            // すぐ消す
+            this.transform.localScale = new Vector3 ( 2,2,2);
+
             bool pushUpkey = vKey > 0;
             // ジャンプ可能な高さかどうか
             bool canJumpHeight = jumpPosition + jumpHeight > this.transform.position.y;

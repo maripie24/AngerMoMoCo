@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -14,14 +15,17 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] Slider sliderHP; // インスペクターで設定
 
     private AngerGauge angerGaugeScript;
-    private Animator anim;
+    private Rigidbody2D rb;
+    private Animator animator;
 
     public bool isChasing;
+    private bool isDead = false;
     void Start()
     {
         player = GameObject.Find("Player");
         searchArea = this.transform.GetChild(0).GetComponent<SearchAreaManager>(); // SearchAreaを取得
-        anim = this.GetComponent<Animator>();
+        animator = this.GetComponent<Animator>();
+        rb = this.GetComponent<Rigidbody2D>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
         GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
@@ -29,37 +33,32 @@ public class EnemyManager : MonoBehaviour
 
         sliderHP.value = maxHP; // Sliderを最大HPに設定する
         HP = maxHP; // HPを最大にする
+
+        animator.SetBool("die", isDead);
     }
 
     void Update()
     {
+        if (isDead) return; // 死亡時は何もせずに終了
+
         Vector2 direction = (player.transform.position - this.transform.position).normalized;
 
         // プレイヤーを追いかける
         if (isChasing)
         {
             this.transform.position += (Vector3)direction * chasingSpeed * Time.deltaTime;
-
-            anim.SetBool("run", true);
+            animator.SetBool("run", true);
         }
         else
         {
-            anim.SetBool("run", false);
+            animator.SetBool("run", false);
         }
 
         // プレイヤーの方向に応じて敵の向きを変更する
-        if (direction.x > 0)
-        {
-            // 右向き
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else if (direction.x < 0)
-        {
-            // 左向き
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-
+        float scaleX = Mathf.Abs(transform.localScale.x); // 元のスケールを保持
+        transform.localScale = new Vector3(direction.x >= 0 ? -scaleX : scaleX, transform.localScale.y, transform.localScale.z);
     }
+
 
     // 弾丸のノックバックとダメージ
     void OnCollisionEnter2D(Collision2D collision)
@@ -68,7 +67,7 @@ public class EnemyManager : MonoBehaviour
         {
             // ノックバックの実装
             Vector2 knockbackDirection = (this.transform.position - collision.transform.position).normalized;
-            GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
 
             TakeDamage();
         }
@@ -83,9 +82,10 @@ public class EnemyManager : MonoBehaviour
             // Debug.Log("敵を検出しました");
             // パンチエリアからのノックバック方向
             Vector2 knockbackDirection = (this.transform.position - collision.transform.position);
-            GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * 10, ForceMode2D.Impulse);
+            rb.AddForce(knockbackDirection * knockbackForce * 10, ForceMode2D.Impulse);
 
             TakeDamage();
+            Die();
         }
     }
 
@@ -94,12 +94,31 @@ public class EnemyManager : MonoBehaviour
     {
         HP -= 20;
         sliderHP.value = (float)HP; // slider側のスプリクトのメソッドで減らす
+    }
+
+    private void Die()
+    {
         if (HP <= 0)
         {
-            angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // Angerゲージが貯まる(敵を倒すと)
-            KillCounter.killCounter.IncrementCount(); // 
-            Destroy(this.gameObject);
+            StartCoroutine(EnemyDie());
         }
     }
 
+    private IEnumerator EnemyDie()
+    {
+        isDead = true;　// 死亡フラグを立てる
+        animator.SetBool("die", isDead);
+        Debug.Log("dieをtrueにしました");
+
+        GetComponent<Collider2D>().isTrigger = true; // 当たり判定を無効化する
+        rb.gravityScale = 0;
+
+        angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // Angerゲージが貯まる(敵を倒すと)
+        KillCounter.killCounter.IncrementCount(); // キルカウントのインクリメント
+
+        yield return new WaitForSeconds(2f);
+
+        
+        Destroy(this.gameObject);
+    }
 }

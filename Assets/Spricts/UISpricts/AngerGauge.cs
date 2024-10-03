@@ -30,7 +30,7 @@ public class AngerGauge : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"{currentRate}です"); // ゲージの数値チェック
+        // Debug.Log($"{currentRate}です"); // ゲージの数値チェック
 
         if (currentRate >= 1f) // ゲージ満タン
         {

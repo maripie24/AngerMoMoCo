@@ -3209,7 +3209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 886490172958359368, guid: 0fd24a6af915fbe4a87304cbbfe17547, type: 3}
-  spawnInterval: 2
+  spawnInterval: 59.02
 --- !u!1 &1811605140
 GameObject:
   m_ObjectHideFlags: 0
@@ -3622,6 +3622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 671694935}
   gameClearImage: {fileID: 1857779284}
+  crearKill: 50
 --- !u!4 &2011550119
 Transform:
   m_ObjectHideFlags: 0

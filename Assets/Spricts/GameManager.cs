@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SceneManagement;
-
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel; // インスペクター上で設定
     [SerializeField] private GameObject gameClearImage; // インスペクター上で設定
+    [SerializeField] private int crearKill = 50;
 
     private bool isPaused = false; // ゲームがポーズ中かどうかを管理するフラグ
     public static bool IsPaused { get; private set;} // 他のスプリクトから参照するためのプロパティ
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 50キルでゲームクリア
-        if(KillCounter.killCounter.EnemyCount >= 4)
+        if(KillCounter.killCounter.EnemyCount >= crearKill)
         {
             StartCoroutine(StartGameClearSequence());
         }
