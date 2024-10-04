@@ -24,6 +24,7 @@ public class KillCounter : MonoBehaviour
         if (killCounter == null)
         {
             killCounter = this;
+            DontDestroyOnLoad(gameObject);
         }
         else // 既にインスタンスが存在する場合
         {

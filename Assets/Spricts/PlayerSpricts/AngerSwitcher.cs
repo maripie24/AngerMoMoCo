@@ -5,6 +5,7 @@ public class AngerSwitcher : MonoBehaviour
     private PlayerNormal playerNormal;
     private PlayerAnger playerAnger;
     private AngerGauge angerGauge;
+    private Animator animator;
     public bool canSwitchToAnger = false;
     public bool isAngerMode = false;
 
@@ -12,6 +13,7 @@ public class AngerSwitcher : MonoBehaviour
     {
         playerNormal = GetComponent<PlayerNormal>();
         playerAnger = GetComponent<PlayerAnger>();
+        animator = GetComponent<Animator>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
         GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
@@ -21,6 +23,7 @@ public class AngerSwitcher : MonoBehaviour
         playerNormal.enabled = true;
         playerAnger.enabled = false;
         isAngerMode = false;
+        animator.SetBool("isAnger", isAngerMode);
     }
 
     void Update()
@@ -38,14 +41,16 @@ public class AngerSwitcher : MonoBehaviour
         playerNormal.enabled = false;
         playerAnger.enabled = true;
         isAngerMode = true;
+        animator.SetBool("isAnger", isAngerMode);
     }
 
     public void SwitchToNormal()
     {
-        // 状態の切り替え
+        // 状態の切り替え  
         playerNormal.enabled = true;
         playerAnger.enabled = false;
         isAngerMode = false;
+        animator.SetBool("isAnger", isAngerMode);
     }
 
 }

@@ -166,9 +166,6 @@ public class PlayerBase : MonoBehaviour
 
         if (isJumping)
         {
-            // ‚·‚®Á‚·
-            this.transform.localScale = new Vector3 ( 2,2,2);
-
             bool pushUpkey = vKey > 0;
             // ƒWƒƒƒ“ƒv‰Â”\‚È‚‚³‚©‚Ç‚¤‚©
             bool canJumpHeight = jumpPosition + jumpHeight > this.transform.position.y;

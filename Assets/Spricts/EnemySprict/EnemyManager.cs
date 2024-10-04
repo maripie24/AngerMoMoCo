@@ -57,6 +57,8 @@ public class EnemyManager : MonoBehaviour
         // プレイヤーの方向に応じて敵の向きを変更する
         float scaleX = Mathf.Abs(transform.localScale.x); // 元のスケールを保持
         transform.localScale = new Vector3(direction.x >= 0 ? -scaleX : scaleX, transform.localScale.y, transform.localScale.z);
+
+        Die();
     }
 
 
@@ -85,7 +87,6 @@ public class EnemyManager : MonoBehaviour
             rb.AddForce(knockbackDirection * knockbackForce * 10, ForceMode2D.Impulse);
 
             TakeDamage();
-            Die();
         }
     }
 
@@ -98,27 +99,33 @@ public class EnemyManager : MonoBehaviour
 
     private void Die()
     {
-        if (HP <= 0)
+        if (!isDead && HP <= 0)
         {
+            isDead = true; // ここでフラグを立てる
+            Debug.Log("Starting EnemyDie coroutine."); 
             StartCoroutine(EnemyDie());
         }
     }
 
     private IEnumerator EnemyDie()
     {
-        isDead = true;　// 死亡フラグを立てる
+        Debug.Log("EnemyDie coroutine started."); // コルーチンの開始確認
+
+        isDead = true; // 死亡フラグを立てる
         animator.SetBool("die", isDead);
-        Debug.Log("dieをtrueにしました");
 
         GetComponent<Collider2D>().isTrigger = true; // 当たり判定を無効化する
         rb.gravityScale = 0;
 
+        Debug.Log("Adding anger and incrementing kill count.");
+
         angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // Angerゲージが貯まる(敵を倒すと)
         KillCounter.killCounter.IncrementCount(); // キルカウントのインクリメント
 
+        Debug.Log("Waiting for 2 seconds.");
         yield return new WaitForSeconds(2f);
 
-        
+        Debug.Log("Destroying enemy.");
         Destroy(this.gameObject);
     }
 }
