@@ -109,23 +109,17 @@ public class EnemyManager : MonoBehaviour
 
     private IEnumerator EnemyDie()
     {
-        Debug.Log("EnemyDie coroutine started."); // コルーチンの開始確認
-
         isDead = true; // 死亡フラグを立てる
         animator.SetBool("die", isDead);
 
         GetComponent<Collider2D>().isTrigger = true; // 当たり判定を無効化する
         rb.gravityScale = 0;
 
-        Debug.Log("Adding anger and incrementing kill count.");
-
         angerGaugeScript.AddAnger(angerGaugeScript.debugAngerRate); // Angerゲージが貯まる(敵を倒すと)
         KillCounter.killCounter.IncrementCount(); // キルカウントのインクリメント
 
-        Debug.Log("Waiting for 2 seconds.");
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("Destroying enemy.");
         Destroy(this.gameObject);
     }
 }
