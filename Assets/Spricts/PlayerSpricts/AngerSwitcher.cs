@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class AngerSwitcher : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class AngerSwitcher : MonoBehaviour
     private PlayerAnger playerAnger;
     private AngerGauge angerGauge;
     private Animator animator;
+    private PostProcessVolume postProcessVolume;
     public bool canSwitchToAnger = false;
     public bool isAngerMode = false;
 
@@ -14,6 +16,7 @@ public class AngerSwitcher : MonoBehaviour
         playerNormal = GetComponent<PlayerNormal>();
         playerAnger = GetComponent<PlayerAnger>();
         animator = GetComponent<Animator>();
+        postProcessVolume = GameObject.FindWithTag("MainCamera").GetComponent<PostProcessVolume>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
         GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
@@ -24,6 +27,7 @@ public class AngerSwitcher : MonoBehaviour
         playerAnger.enabled = false;
         isAngerMode = false;
         animator.SetBool("isAnger", isAngerMode);
+        postProcessVolume.enabled = false;
     }
 
     void Update()
@@ -42,6 +46,7 @@ public class AngerSwitcher : MonoBehaviour
         playerAnger.enabled = true;
         isAngerMode = true;
         animator.SetBool("isAnger", isAngerMode);
+        postProcessVolume.enabled = true;
     }
 
     public void SwitchToNormal()
@@ -51,6 +56,6 @@ public class AngerSwitcher : MonoBehaviour
         playerAnger.enabled = false;
         isAngerMode = false;
         animator.SetBool("isAnger", isAngerMode);
+        postProcessVolume.enabled = false;
     }
-
 }
