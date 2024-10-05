@@ -14,33 +14,51 @@ public class EnemyManager : MonoBehaviour
     private int HP;
     [SerializeField] Slider sliderHP; // インスペクターで設定
 
+    [SerializeField] GameObject attention;
+    private Vector3 attentionSpawnOffset = new Vector3(0.4f, 4f, 0f);
+    public Vector3 attentionSpawnPosition;
+
+
     private AngerGauge angerGaugeScript;
     private Rigidbody2D rb;
     private Animator animator;
 
     public bool isChasing;
-    private bool isDead = false;
-    void Start()
+    private bool isDead;
+    private void Awake()
     {
         player = GameObject.Find("Player");
         searchArea = this.transform.GetChild(0).GetComponent<SearchAreaManager>(); // SearchAreaを取得
+
         animator = this.GetComponent<Animator>();
         rb = this.GetComponent<Rigidbody2D>();
 
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
         GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
         angerGaugeScript = angerGaugeObject.GetComponent<AngerGauge>();
-
+    }
+    void Start()
+    {
         sliderHP.value = maxHP; // Sliderを最大HPに設定する
         HP = maxHP; // HPを最大にする
 
+        isDead = false;
         animator.SetBool("die", isDead);
+
+        attentionSpawnOffset = new Vector3(0.4f, 4f, 0f);
     }
 
     void Update()
     {
         if (isDead) return; // 死亡時は何もせずに終了
 
+        attentionSpawnPosition = this.transform.position + attentionSpawnOffset;
+        Chasing();
+        Die();
+    }
+
+    public void Chasing()
+    {
         Vector2 direction = (player.transform.position - this.transform.position).normalized;
 
         // プレイヤーを追いかける
@@ -57,12 +75,26 @@ public class EnemyManager : MonoBehaviour
         // プレイヤーの方向に応じて敵の向きを変更する
         float scaleX = Mathf.Abs(transform.localScale.x); // 元のスケールを保持
         transform.localScale = new Vector3(direction.x >= 0 ? -scaleX : scaleX, transform.localScale.y, transform.localScale.z);
+    }
 
-        Die();
+    public void StartChase()
+    {
+        isChasing = true;
+    }
+    public void StopChase()
+    {
+        isChasing = false;
+    }
+
+    // ｱﾃﾝｼｮﾝを生成する
+    public void InstantiateAttention()
+    {
+        // ｱﾃﾝｼｮﾝを生成する
+        Instantiate(attention, attentionSpawnPosition, Quaternion.identity);
     }
 
 
-    // 弾丸のノックバックとダメージ
+    // 弾丸のノックバックとダメージ   
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))

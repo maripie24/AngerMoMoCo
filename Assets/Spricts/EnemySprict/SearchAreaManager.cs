@@ -13,14 +13,15 @@ public class SearchAreaManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            enemy.isChasing = true;
+            enemy.StartChase();
+            enemy.InstantiateAttention();
         }
     }
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            enemy.isChasing = true;
+            enemy.StartChase();
         }
     }
 
@@ -28,7 +29,7 @@ public class SearchAreaManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            enemy.isChasing = false;
+            enemy.StopChase();
         }
     }
 }
