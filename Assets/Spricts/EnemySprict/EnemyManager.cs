@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
         isDead = false;
         animator.SetBool("die", isDead);
 
-        attentionSpawnOffset = new Vector3(0.4f, 4f, 0f);
+        attentionSpawnOffset = new Vector3(0.1f, 3.5f, 0f);
     }
 
     void Update()
