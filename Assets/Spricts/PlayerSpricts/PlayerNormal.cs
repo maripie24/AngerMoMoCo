@@ -22,18 +22,18 @@ public class PlayerNormal : PlayerBase
         if (isCurrentlyMoving && !wasMoving)
         {
             // 移動を開始した瞬間に移動音を再生
-            AudioManager.Instance.PlayNormalRun();
+            AudioManager.Instance.PlayRun();
         }
         else if (!isCurrentlyMoving && wasMoving)
         {
             // 移動を停止した瞬間に移動音を停止
-            AudioManager.Instance.StopNormalRun();
+            AudioManager.Instance.StopRun();
         }
 
         // ジャンプ中の場合、移動音を停止
         if (isJumping && AudioManager.Instance.IsPlayerRunSoundPlaying)
         {
-            AudioManager.Instance.StopNormalRun();
+            AudioManager.Instance.StopRun();
         }
 
         // 現在の移動状態を記録
@@ -54,7 +54,7 @@ public class PlayerNormal : PlayerBase
         if (!wasJumping && isJumping)
         {
             // ジャンプ音を再生
-            AudioManager.Instance.SENormalJump();
+            AudioManager.Instance.SEJump();
         }
     }
 }

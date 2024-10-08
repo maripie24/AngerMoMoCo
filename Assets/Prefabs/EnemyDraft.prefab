@@ -173,6 +173,7 @@ MonoBehaviour:
   attention: {fileID: 8462030866907619460, guid: 03443d77c5e570e48934dc96bde4e862, type: 3}
   attentionSpawnPosition: {x: 0, y: 0, z: 0}
   isChasing: 0
+  enemyRun: {fileID: 8300000, guid: b45c9451a9409a44588357bdadeb40a9, type: 3}
 --- !u!95 &5401995566596734706
 Animator:
   serializedVersion: 5

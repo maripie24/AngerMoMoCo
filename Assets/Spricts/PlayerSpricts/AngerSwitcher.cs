@@ -47,6 +47,7 @@ public class AngerSwitcher : MonoBehaviour
         isAngerMode = true;
         animator.SetBool("isAnger", isAngerMode);
         postProcessVolume.enabled = true;
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.angerBGM); // Anger—p‚ÌBGM‚ğÄ¶
     }
 
     public void SwitchToNormal()
@@ -57,5 +58,6 @@ public class AngerSwitcher : MonoBehaviour
         isAngerMode = false;
         animator.SetBool("isAnger", isAngerMode);
         postProcessVolume.enabled = false;
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.normalBGM); // Normal—p‚ÌBGM‚ğÄ¶
     }
 }

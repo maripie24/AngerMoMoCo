@@ -12,7 +12,12 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false; // ゲームがポーズ中かどうかを管理するフラグ
     public static bool IsPaused { get; private set;} // 他のスプリクトから参照するためのプロパティ
 
-    void Awake()
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.normalBGM); // Normal用のBGMを再生
+    }
+
+    private void Awake()
     {
         menuPanel.SetActive(false);
         gameClearImage.SetActive(false);
@@ -21,7 +26,7 @@ public class GameManager : MonoBehaviour
         IsPaused = false;
     }
 
-    void Update()
+    private void Update()
     {
         // ESCキーが押されたらメニュー画面をONOFFにする
         if (Input.GetKeyDown(KeyCode.Escape))

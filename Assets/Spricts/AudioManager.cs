@@ -15,20 +15,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource shotSource;
     [SerializeField] private AudioSource runSource; // Player移動音用
-    private AudioSource enemyRunSource; // Enemy移動用
 
     [Header("SE Player Audio Clip")]
     [SerializeField] private AudioClip normalRun;
     [SerializeField] private AudioClip normalShot;
     [SerializeField] private AudioClip normalJump;
+    [SerializeField] private AudioClip AngerRun;
+    [SerializeField] private AudioClip AngerPunch;
+    [SerializeField] private AudioClip AngerJump;
 
     [Header("SE others")]
-    [SerializeField] private AudioClip enemyRun;
-    [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private AudioClip gameClear;
 
     [Header("BGM")]
-    [SerializeField] private AudioClip normalBGM;
+    public AudioClip normalBGM;
+    public AudioClip angerBGM;
 
 
     private void Awake()
@@ -43,8 +44,6 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject); // 既にインスタンスが存在する場合は破棄
         }
-
-        enemyRunSource = enemy.GetComponent<AudioSource>(); // Enemyプレハブからｵｰﾃﾞｨｵｿｰｽを取得
     }
 
     private void Start()
@@ -55,12 +54,11 @@ public class AudioManager : MonoBehaviour
     // BGMを再生
     public void PlayBGM(AudioClip clip, bool loop = true)
     {
-        bgmSource.clip = normalBGM;
-
         if (bgmSource.isPlaying)
         {
             bgmSource.Stop();
         }
+        bgmSource.clip = clip;
         bgmSource.loop = loop; // BGMなのでループ
         bgmSource.Play();
     }
@@ -75,7 +73,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // 移動音を再生
-    public void PlayNormalRun()
+    public void PlayRun()
     {
         if (runSource != null)
         {
@@ -89,7 +87,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // 移動音を停止
-    public void StopNormalRun()
+    public void StopRun()
     {
         if (runSource != null && runSource.isPlaying)
         {
@@ -102,27 +100,9 @@ public class AudioManager : MonoBehaviour
         shotSource.PlayOneShot(normalShot);
     }
 
-    public void SENormalJump()
+    public void SEJump()
     {
         seSource.PlayOneShot(normalJump);
-    }
-
-    public void PlayEnemyRun()
-    {
-        if (enemyRunSource != null && enemyRun != null)
-        {
-            enemyRunSource.clip = enemyRun;
-            enemyRunSource.loop = true;
-            enemyRunSource.Play();
-        }
-    }
-
-    public void StopEnemyRun()
-    {
-        if (enemyRunSource != null && enemyRunSource.isPlaying)
-        {
-            enemyRunSource.Stop();
-        }
     }
 
     public void SEGameClear()
@@ -135,11 +115,5 @@ public class AudioManager : MonoBehaviour
     public bool IsPlayerRunSoundPlaying
     {
         get { return runSource != null && runSource.isPlaying; }
-    }
-
-    // Enemyの移動音が再生中かどうかを確認するプロパティ
-    public bool IsEnemyRunSoundPlaying
-    {
-        get { return enemyRunSource != null && enemyRunSource.isPlaying; }
     }
 }

@@ -3433,7 +3433,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 7484985694339023260, guid: 677fc97e4e6b5684e81deaed29ae8d9d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.595
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4152,10 +4152,12 @@ MonoBehaviour:
   normalRun: {fileID: 8300000, guid: b45c9451a9409a44588357bdadeb40a9, type: 3}
   normalShot: {fileID: 8300000, guid: 65e92e5f28474254387376e616e2ebfc, type: 3}
   normalJump: {fileID: 8300000, guid: b22f25ef94a7a5a45ab210f6a003b2a8, type: 3}
-  enemyRun: {fileID: 8300000, guid: b45c9451a9409a44588357bdadeb40a9, type: 3}
-  enemyDeath: {fileID: 0}
+  AngerRun: {fileID: 0}
+  AngerPunch: {fileID: 0}
+  AngerJump: {fileID: 0}
   gameClear: {fileID: 8300000, guid: da9b185002cf29e43bf0eb0b3ee7d0a3, type: 3}
   normalBGM: {fileID: 8300000, guid: 706a3758daf0dd44684419d90be9daf5, type: 3}
+  angerBGM: {fileID: 0}
 --- !u!4 &1882794222
 Transform:
   m_ObjectHideFlags: 0

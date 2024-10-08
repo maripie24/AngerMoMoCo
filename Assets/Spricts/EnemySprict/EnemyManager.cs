@@ -25,6 +25,8 @@ public class EnemyManager : MonoBehaviour
 
     public bool isChasing;
     private bool isDead;
+
+    private AudioSource runAudioSource;                // プレハブ内の AudioSource を参照
     private void Awake()
     {
         player = GameObject.Find("Player");
@@ -36,6 +38,13 @@ public class EnemyManager : MonoBehaviour
         // AngerCanvasの下にあるAngerGaugeオブジェクトを検索
         GameObject angerGaugeObject = GameObject.Find("Canvas/AngerGauge");
         angerGaugeScript = angerGaugeObject.GetComponent<AngerGauge>();
+
+        // プレハブにアタッチされた AudioSource を取得
+        runAudioSource = GetComponent<AudioSource>();
+        if (runAudioSource == null)
+        {
+            Debug.LogError("RunAudioSource が Enemy プレハブにアタッチされていません。");
+        }
     }
     void Start()
     {
@@ -67,19 +76,21 @@ public class EnemyManager : MonoBehaviour
             this.transform.position += (Vector3)direction * chasingSpeed * Time.deltaTime;
             animator.SetBool("run", true);
 
-            // 追跡中のみenemyRunを再生
-            if (!AudioManager.Instance.IsEnemyRunSoundPlaying) // 既に再生中でない場合にのみ再生
+            // 追跡中のみ enemyRun を再生
+            if (runAudioSource != null && !runAudioSource.isPlaying)
             {
-                AudioManager.Instance.PlayEnemyRun();
+                runAudioSource.loop = true;      // ループ再生
+                runAudioSource.Play();
             }
         }
         else
         {
             animator.SetBool("run", false);
-            // 追跡が停止したらenemyRunも停止
-            if (AudioManager.Instance.IsEnemyRunSoundPlaying) // 再生していたら
+
+            // 追跡が停止したら enemyRun も停止
+            if (runAudioSource != null && runAudioSource.isPlaying)
             {
-                AudioManager.Instance.StopEnemyRun();
+                runAudioSource.Stop();
             }
         }
 
