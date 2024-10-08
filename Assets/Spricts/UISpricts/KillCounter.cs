@@ -24,9 +24,10 @@ public class KillCounter : MonoBehaviour
         if (killCounter == null)
         {
             killCounter = this;
+            transform.SetParent(null); // 親から切り離してルートに移動
             DontDestroyOnLoad(gameObject);
         }
-        else // 既にインスタンスが存在する場合
+        else if (killCounter != this) // 既にインスタンスが存在する場合、自分自身を削除
         {
             Destroy(killCounter);
         }

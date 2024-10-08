@@ -66,10 +66,21 @@ public class EnemyManager : MonoBehaviour
         {
             this.transform.position += (Vector3)direction * chasingSpeed * Time.deltaTime;
             animator.SetBool("run", true);
+
+            // 追跡中のみenemyRunを再生
+            if (!AudioManager.Instance.IsEnemyRunSoundPlaying) // 既に再生中でない場合にのみ再生
+            {
+                AudioManager.Instance.PlayEnemyRun();
+            }
         }
         else
         {
             animator.SetBool("run", false);
+            // 追跡が停止したらenemyRunも停止
+            if (AudioManager.Instance.IsEnemyRunSoundPlaying) // 再生していたら
+            {
+                AudioManager.Instance.StopEnemyRun();
+            }
         }
 
         // プレイヤーの方向に応じて敵の向きを変更する

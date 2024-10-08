@@ -7,6 +7,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField] protected AnimationCurve jumpCurve; // インスペクター上で設定する
     protected Rigidbody2D playerRigidbody2D;
     protected Animator animator;
+    protected AudioSource audioSource;
     protected GroundCheck groundCheck;
     protected GroundCheck headCheck;
 
@@ -24,6 +25,7 @@ public class PlayerBase : MonoBehaviour
     protected bool isGround = false;
     protected bool isHead = false;
     protected bool isJumping = false;
+    protected bool isMoving = false; 
     protected bool canControl = true;
     public bool isFacingRight = true; // プレイヤーが右を向いているか
 
@@ -33,6 +35,7 @@ public class PlayerBase : MonoBehaviour
         // 各種取得する
         playerRigidbody2D = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
+        audioSource = GameObject.Find("AudioManager").GetComponent<AudioSource>();
         groundCheck = GameObject.Find("GroundCheck").GetComponent<GroundCheck>();
         headCheck = GameObject.Find("HeadCheck").GetComponent<GroundCheck>();
     }
