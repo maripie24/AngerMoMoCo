@@ -4152,12 +4152,12 @@ MonoBehaviour:
   normalRun: {fileID: 8300000, guid: b45c9451a9409a44588357bdadeb40a9, type: 3}
   normalShot: {fileID: 8300000, guid: 65e92e5f28474254387376e616e2ebfc, type: 3}
   normalJump: {fileID: 8300000, guid: b22f25ef94a7a5a45ab210f6a003b2a8, type: 3}
-  AngerRun: {fileID: 0}
-  AngerPunch: {fileID: 0}
-  AngerJump: {fileID: 0}
+  angerRun: {fileID: 8300000, guid: c7d722a27def0b448ba0ad1bcff1970c, type: 3}
+  angerPunch: {fileID: 0}
+  angerJump: {fileID: 8300000, guid: fa23499441407c84ba3625753d6f95fb, type: 3}
   gameClear: {fileID: 8300000, guid: da9b185002cf29e43bf0eb0b3ee7d0a3, type: 3}
   normalBGM: {fileID: 8300000, guid: 706a3758daf0dd44684419d90be9daf5, type: 3}
-  angerBGM: {fileID: 0}
+  angerBGM: {fileID: 8300000, guid: 221339805b400ac49a7745cae2ed7b84, type: 3}
 --- !u!4 &1882794222
 Transform:
   m_ObjectHideFlags: 0

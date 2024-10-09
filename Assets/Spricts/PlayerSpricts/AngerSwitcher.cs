@@ -48,6 +48,8 @@ public class AngerSwitcher : MonoBehaviour
         animator.SetBool("isAnger", isAngerMode);
         postProcessVolume.enabled = true;
         AudioManager.Instance.PlayBGM(AudioManager.Instance.angerBGM); // Anger用のBGMを再生
+        AudioManager.Instance.PlayRun(isAngerMode); // 移動音の切り替え
+        AudioManager.Instance.PlayJump(isAngerMode); // ジャンプ音の切り替え
     }
 
     public void SwitchToNormal()
@@ -59,5 +61,7 @@ public class AngerSwitcher : MonoBehaviour
         animator.SetBool("isAnger", isAngerMode);
         postProcessVolume.enabled = false;
         AudioManager.Instance.PlayBGM(AudioManager.Instance.normalBGM); // Normal用のBGMを再生
+        AudioManager.Instance.PlayRun(isAngerMode); // 移動音の切り替え
+        AudioManager.Instance.PlayJump(isAngerMode); // ジャンプ音の切り替え
     }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -20,9 +21,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip normalRun;
     [SerializeField] private AudioClip normalShot;
     [SerializeField] private AudioClip normalJump;
-    [SerializeField] private AudioClip AngerRun;
-    [SerializeField] private AudioClip AngerPunch;
-    [SerializeField] private AudioClip AngerJump;
+    [SerializeField] private AudioClip angerRun;
+    [SerializeField] private AudioClip angerPunch;
+    [SerializeField] private AudioClip angerJump;
 
     [Header("SE others")]
     [SerializeField] private AudioClip gameClear;
@@ -73,14 +74,16 @@ public class AudioManager : MonoBehaviour
     }
 
     // à⁄ìÆâπÇçƒê∂
-    public void PlayRun()
+    public void PlayRun(bool isAngerMode)
     {
         if (runSource != null)
         {
-            if (!runSource.isPlaying)
+            AudioClip clipToPlay = isAngerMode ? angerRun : normalRun;
+
+            if (!runSource.isPlaying || runSource.clip != clipToPlay)
             {
-                runSource.clip = normalRun;
-                runSource.loop = true;      // ÉãÅ[Évçƒê∂
+                runSource.clip = clipToPlay;
+                runSource.loop = true;
                 runSource.Play();
             }
         }
@@ -95,14 +98,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SENormalShot()
+    public void PlayShot()
     {
         shotSource.PlayOneShot(normalShot);
     }
 
-    public void SEJump()
+    public void PlayJump(bool isAngerMode)
     {
-        seSource.PlayOneShot(normalJump);
+        if(seSource != null)
+        {
+            AudioClip clipToPlay = isAngerMode ? angerJump : normalJump;
+            seSource.PlayOneShot(clipToPlay);
+        }
     }
 
     public void SEGameClear()

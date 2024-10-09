@@ -9,7 +9,7 @@ public class PlayerNormal : PlayerBase
     {
         base.Fire();
         // ショット音を再生
-        AudioManager.Instance.SENormalShot();
+        AudioManager.Instance.PlayShot();
     }
 
     protected override void Movement()
@@ -22,7 +22,7 @@ public class PlayerNormal : PlayerBase
         if (isCurrentlyMoving && !wasMoving)
         {
             // 移動を開始した瞬間に移動音を再生
-            AudioManager.Instance.PlayRun();
+            AudioManager.Instance.PlayRun(false);
         }
         else if (!isCurrentlyMoving && wasMoving)
         {
@@ -54,7 +54,7 @@ public class PlayerNormal : PlayerBase
         if (!wasJumping && isJumping)
         {
             // ジャンプ音を再生
-            AudioManager.Instance.SEJump();
+            AudioManager.Instance.PlayJump(false);
         }
     }
 }

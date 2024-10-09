@@ -61,6 +61,7 @@ public class PlayerAnger : PlayerBase
         if (!isPunching)
         {
             base.Jump();
+            AudioManager.Instance.PlayJump(true);
 
             // ŠoÁ‚ÌƒWƒƒƒ“ƒv—Í‚ğ‘‰Á‚³‚¹‚é
             if (isJumping)
