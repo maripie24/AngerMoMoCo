@@ -6,8 +6,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] private GameObject enemy;
-
     [Header("Audio Mixers")]
     public AudioMixer audioMixer;
 
@@ -16,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource shotSource;
     [SerializeField] private AudioSource runSource; // Player移動音用
+    [SerializeField] private AudioSource punchSource;
 
     [Header("SE Player Audio Clip")]
     [SerializeField] private AudioClip normalRun;
@@ -109,6 +108,29 @@ public class AudioManager : MonoBehaviour
         {
             AudioClip clipToPlay = isAngerMode ? angerJump : normalJump;
             seSource.PlayOneShot(clipToPlay);
+        }
+    }
+
+    public void PlayAngerPunch() // 怒り状態のパンチ音を再生
+    {
+        if (punchSource != null && angerPunch != null && !punchSource.isPlaying)
+        {
+            punchSource.clip = angerPunch;
+            punchSource.loop = false; // 必要に応じてループ設定
+            punchSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("AngerPunchSource または AngerPunch がアサインされていません。");
+        }
+    }
+
+    // 怒り状態のパンチ音を停止
+    public void StopAngerPunch()
+    {
+        if (punchSource != null && punchSource.isPlaying)
+        {
+            punchSource.Stop();
         }
     }
 

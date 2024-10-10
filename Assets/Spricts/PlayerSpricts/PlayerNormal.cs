@@ -8,8 +8,7 @@ public class PlayerNormal : PlayerBase
     protected override void Fire()
     {
         base.Fire();
-        // ƒVƒ‡ƒbƒg‰¹‚ğÄ¶
-        AudioManager.Instance.PlayShot();
+       
     }
 
     protected override void Movement()

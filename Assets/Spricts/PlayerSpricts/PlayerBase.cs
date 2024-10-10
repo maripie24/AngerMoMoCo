@@ -88,6 +88,9 @@ public class PlayerBase : MonoBehaviour
 
         // spawnPosition‚©‚ç’e‚ğ¶¬‚·‚é
         Instantiate(bulletToSpawn, spawnPosition, Quaternion.identity);
+
+        // ƒVƒ‡ƒbƒg‰¹‚ğÄ¶
+        AudioManager.Instance.PlayShot();
     }
 
     /// <summary>

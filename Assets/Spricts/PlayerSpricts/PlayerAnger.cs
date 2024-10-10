@@ -61,7 +61,6 @@ public class PlayerAnger : PlayerBase
         if (!isPunching)
         {
             base.Jump();
-            AudioManager.Instance.PlayJump(true);
 
             // 覚醒時のジャンプ力を増加させる
             if (isJumping)
@@ -99,7 +98,9 @@ public class PlayerAnger : PlayerBase
 
         // パンチのコライダーを有効にする
         punchCollider.enabled = true;
-            
+
+        AudioManager.Instance.PlayAngerPunch(); // パンチ音を再生
+
         // 一定速度に固定する
         Vector2 punchDirection = new Vector2 (isFacingRight ? 1f : -1f, 0f);
         playerRigidbody2D.velocity = punchDirection * punchSpeed;
@@ -111,6 +112,8 @@ public class PlayerAnger : PlayerBase
         // Animator,ﾊﾟﾝﾁのｺﾗｲﾀﾞｰ、をオフにする
         animator.SetBool("punch", false); 
         punchCollider.enabled = false;
+
+        AudioManager.Instance.StopAngerPunch(); // パンチ音を停止
 
         isPunching = false;
         Debug.Log("Punch ended");
